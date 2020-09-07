@@ -1,15 +1,18 @@
-package com.shopping.kart.user.management;
+package com.shopping.kart.application.gateway;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
+import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
 
 @SpringBootApplication
 @EnableEurekaClient
-public class ShoppingKartUserManagementApplication {
+@EnableZuulProxy
+public class ShoppingKartZuulApplicationGatewayApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(ShoppingKartUserManagementApplication.class, args);
+		SpringApplication.run(ShoppingKartZuulApplicationGatewayApplication.class, args);
 	}
 
 }
+	
