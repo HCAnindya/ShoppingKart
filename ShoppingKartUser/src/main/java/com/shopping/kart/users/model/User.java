@@ -15,6 +15,9 @@ public class User {
 	
 	@NotNull(message = "email is Empty")
 	private String email;
+	
+	private String userId;
+	
 	public String getFirstName() {
 		return firstName;
 	}
@@ -38,6 +41,12 @@ public class User {
 	}
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	public String getUserId() {
+		return userId;
+	}
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 	
 	

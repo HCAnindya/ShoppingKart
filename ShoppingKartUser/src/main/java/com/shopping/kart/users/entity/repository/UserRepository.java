@@ -6,4 +6,5 @@ import com.shopping.kart.users.entity.UserEntity;
 
 public interface UserRepository extends CrudRepository<UserEntity, Long> {
 
+	UserEntity findByEmail(String email);
 }
