@@ -5,6 +5,7 @@ import javax.servlet.Filter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -24,6 +25,9 @@ public class WebSecurity extends WebSecurityConfigurerAdapter{
 	private UserService userService;
 	
 	@Autowired
+	private Environment env;
+	
+	@Autowired
 	BCryptPasswordEncoder passwordEncoder;
 
 	@Override
@@ -37,8 +41,10 @@ public class WebSecurity extends WebSecurityConfigurerAdapter{
 	}
 
 	private Filter getAuthenticationFilter() throws Exception {
-		AuthenticationFilter authFilter = new AuthenticationFilter(userService, authenticationManager());
+		AuthenticationFilter authFilter = new AuthenticationFilter(userService, 
+				authenticationManager(), env);
 		//authFilter.setAuthenticationManager(authenticationManager());
+		authFilter.setFilterProcessesUrl("/users/login");
 		return authFilter;
 	}
 	

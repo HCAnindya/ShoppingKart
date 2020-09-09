@@ -9,6 +9,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.core.env.Environment;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -25,11 +26,18 @@ import io.jsonwebtoken.SignatureAlgorithm;
 
 public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 	
+	//@Value("${jwt.secret}")
+	private String secretKey;
+	
 	UserService userService;
 	
-	public AuthenticationFilter(UserService userService, AuthenticationManager authenticationManager) {
+	public AuthenticationFilter(UserService userService, 
+			AuthenticationManager authenticationManager,
+			Environment env) {
 		this.userService = userService;
-		super.setAuthenticationManager(authenticationManager)	;
+		super.setAuthenticationManager(authenticationManager);
+		this.secretKey = env.getProperty("jwt.secret");
+		
 	}
 	
 	@Override
@@ -60,7 +68,7 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 		String token = 	Jwts.builder()
 				.setSubject(user.getUserId())
 				.setExpiration(new Date(System.currentTimeMillis() + 86000L))
-				.signWith(SignatureAlgorithm.HS512, user.getUserId())
+				.signWith(SignatureAlgorithm.HS512, secretKey)
 				.compact();	
 		response.addHeader("token", token);
 		response.addHeader("userId", user.getUserId());	
