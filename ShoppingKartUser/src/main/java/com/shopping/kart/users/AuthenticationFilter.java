@@ -26,7 +26,6 @@ import io.jsonwebtoken.SignatureAlgorithm;
 
 public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 	
-	//@Value("${jwt.secret}")
 	private String secretKey;
 	
 	UserService userService;
